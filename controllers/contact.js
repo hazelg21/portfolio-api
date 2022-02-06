@@ -42,6 +42,7 @@ const sendEmail = async (reqBody) => {
             text: `From: ${reqBody.name}, Email: ${reqBody.email}, Message: ${reqBody.msg}`,
             html: `<h1>From: ${reqBody.name}</h1>
             <h2>Email: ${reqBody.email}</h2>
+            <p>Contact Number: ${reqBody.contactNo}</p>
             <p>Message: ${reqBody.msg}</p>
             `,
         };
