@@ -2,8 +2,6 @@ const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
 require('dotenv').config()
 
-
-// These id's and secrets should come from .env file.
 const CLIENT_ID = process.env.GMAIL_CLIENT_ID;
 const CLEINT_SECRET = process.env.GMAIL_SECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
@@ -17,9 +15,7 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
-let feedback
-const sendEmail = async (reqBody) => {
-    console.log(reqBody.msg)
+async function sendMail(reqBody) {
     try {
         const accessToken = await oAuth2Client.getAccessToken();
 
@@ -39,25 +35,32 @@ const sendEmail = async (reqBody) => {
             from: `My Portfolio ${USER_ACCOUNT}`,
             to: process.env.WORK_EMAIL,
             subject: 'My Portfolio Contact Me Page',
-            text: `From: ${reqBody.name}, Email: ${reqBody.email}, Message: ${reqBody.msg}`,
+            text: `From: ${reqBody.name}, Email: ${reqBody.email}, Contact Number: ${reqBody.contactNo}, Message: ${reqBody.msg}`,
             html: `<h1>From: ${reqBody.name}</h1>
             <h2>Email: ${reqBody.email}</h2>
             <p>Contact Number: ${reqBody.contactNo}</p>
             <p>Message: ${reqBody.msg}</p>
-            `,
+            `
         };
 
         const result = await transport.sendMail(mailOptions);
-        feedback=result
         return result;
 
-
-    }catch (error) {
+    } catch (error) {
         return error;
-    } 
+    }
+}
+
+sendToMe = (reqBody) => {
+    return sendMail(reqBody)
+        .then((result) => {
+            console.log('Email sent...', result)
+            return result
+        })
+        .catch((error) => console.log(error.message));
 }
 
 
 module.exports = {
-    sendEmail
+    sendToMe
 }

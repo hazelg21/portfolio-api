@@ -3,10 +3,8 @@ const contactMe = require("../controllers/contact.js");
 const router = express.Router()
 
 
-
-router.post('/contactMe', async (request, response) => {
-    const sendingStat = await contactMe.sendEmail(request.body);
-    // console.log(sendingStat)
+router.post('/contactMe', (request, response) => {
+    contactMe.sendToMe(request.body).then(result => response.send(result))
 })
 
 module.exports = router;
