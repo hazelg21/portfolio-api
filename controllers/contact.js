@@ -3,14 +3,14 @@ const { google } = require('googleapis');
 require('dotenv').config()
 
 const CLIENT_ID = process.env.GMAIL_CLIENT_ID;
-const CLEINT_SECRET = process.env.GMAIL_SECRET;
+const CLIENT_SECRET = process.env.GMAIL_SECRET;
 const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
 const REFRESH_TOKEN = process.env.GMAIL_REFRESH_TOKEN;
 const USER_ACCOUNT = process.env.GMAIL_USER;
 
 const oAuth2Client = new google.auth.OAuth2(
     CLIENT_ID,
-    CLEINT_SECRET,
+    CLIENT_SECRET,
     REDIRECT_URI
 );
 oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
@@ -25,7 +25,7 @@ async function sendMail(reqBody) {
                 type: 'OAuth2',
                 user: USER_ACCOUNT,
                 clientId: CLIENT_ID,
-                clientSecret: CLEINT_SECRET,
+                clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
                 accessToken: accessToken,
             },
