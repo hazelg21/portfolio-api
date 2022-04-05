@@ -27,7 +27,7 @@ async function sendMail(reqBody) {
                 clientId: CLIENT_ID,
                 clientSecret: CLIENT_SECRET,
                 refreshToken: REFRESH_TOKEN,
-                accessToken: accessToken,
+                accessToken: accessToken
             },
         });
 
@@ -59,6 +59,7 @@ sendToMe = (reqBody) => {
         })
         .catch((error) => console.log(error.message));
 }
+
 
 
 module.exports = {
